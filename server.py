@@ -7,8 +7,6 @@ DEBUG=log.debug; INFO=log.info; WARN=log.warning; ERROR=log.error
 app = Flask(__name__)
 
 SECRET = "some-secret" # this is a test, the real one will be on ocp secrets...
-# EVENT_NEW_IMAGE = "new-image"
-# EVENT_LISTENER = "http://el-event-listener-nj389f-rht-webapp-argoqa.apps.ocp-delta.ocp-delta.ole.redhat.com/"
 
 loaded_configurations = None
 
@@ -65,14 +63,21 @@ def _process_incoming_data(request_data, fqn):
     return False
 
 def _get_event_listener_url_for(event, pipeline, namespace):
+    """
+    Gets the URL from the manifest file for the loaded configuration
+    """
     for n in loaded_configurations["event_listeners"]:
-        if n["event"] == event and n["namespace"] == namespace and n["pipeline"] == pipeline:
+        if ((n["event"] == event) and (n["namespace"] == namespace) and (n["pipeline"] == pipeline)):
             return n["url"]
 
 def _process_new_image_event_for(event, eventid, pipeline, namespace):
-    payload = '{"eventid" : "{0}", "event" : {1}, "namespace" : {2}, "pipeline" : {3}}'.format(eventid, event, namespace, pipeline)
+    """
+    Performs the actual request to the OCP event listener
+    """
+    payload = {"eventid" : eventid, "event" : event, "namespace" : namespace, "pipeline": pipeline}
+    headers = {'Content-Type': 'application/json'}
     url = _get_event_listener_url_for(event, pipeline, namespace)
-    return requests.post(url, json=payload)
+    return requests.post(url, json=payload, headers=headers)
 
 if __name__ == '__main__':
     loaded_configurations = _load_manifest()
