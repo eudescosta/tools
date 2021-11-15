@@ -1,0 +1,27 @@
+{
+    "routes": [ 
+        {
+            "fqn" : "/build-notification",
+            "attributes" : ["secret", "event", "eventid", "namespace"]    
+        },
+        {
+            "fqn" : "/another",
+            "attributes" : ["eventid", "namespace"]    
+        }
+    ],
+
+    "event_listeners": [
+        {
+            "event" : "new-image",
+            "url" : "http://el-event-listener-nj389f-rht-webapp-argoqa.apps.ocp-delta.ocp-delta.ole.redhat.com/",
+            "namespace" : "rht-webapp-argoqa",
+            "pipeline" : "rht-bdd"
+        },
+        {
+            "event" : "new-image",
+            "url" : "http://example.com",
+            "namespace" : "rht-webapp-another-namespace",
+            "pipeline" : "some_other_pipeline"
+        }
+    ]
+}
