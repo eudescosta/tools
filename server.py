@@ -27,9 +27,12 @@ def build_notification():
         return ("error processing incoming data", 500)
 
     # processing
-    event = request_data['event']
-    if event == EVENT_NEW_IMAGE:
-        _process_new_image_event()
+    _process_new_image_event_for(
+        eventid=request_data['eventid'],
+        event=request_data['event'],
+        pipeline=request_data['pipeline'],
+        namespace=request_data['namespace']
+        )
 
     return ("ok", 200) 
 
@@ -61,9 +64,15 @@ def _process_incoming_data(request_data, fqn):
         return True
     return False
 
-def _process_new_image_event():
-    payload = '{"eventid" : "1234", "event" : "new-image", "namespace" : "rht-webapp-devel"}'
-    return requests.post('http://example.com', json=payload)
+def _get_event_listener_url_for(event, pipeline, namespace):
+    for n in loaded_configurations["event_listeners"]:
+        if n["event"] == event and n["namespace"] == namespace and n["pipeline"] == pipeline:
+            return n["url"]
+
+def _process_new_image_event_for(event, eventid, pipeline, namespace):
+    payload = '{"eventid" : "{0}", "event" : {1}, "namespace" : {2}, "pipeline" : {3}}'.format(eventid, event, namespace, pipeline)
+    url = _get_event_listener_url_for(event, pipeline, namespace)
+    return requests.post(url, json=payload)
 
 if __name__ == '__main__':
     loaded_configurations = _load_manifest()

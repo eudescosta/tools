@@ -2,7 +2,7 @@
     "routes": [ 
         {
             "fqn" : "/build-notification",
-            "attributes" : ["secret", "event", "eventid", "namespace"]    
+            "attributes" : ["secret", "event", "eventid", "namespace", "pipeline"]    
         },
         {
             "fqn" : "/another",
@@ -18,7 +18,7 @@
             "pipeline" : "rht-bdd"
         },
         {
-            "event" : "new-image",
+            "event" : "new-...",
             "url" : "http://example.com",
             "namespace" : "rht-webapp-another-namespace",
             "pipeline" : "some_other_pipeline"
