@@ -7,7 +7,7 @@ DEBUG=log.debug; INFO=log.info; WARN=log.warning; ERROR=log.error
 app = Flask(__name__)
 
 # stored as a secret in ocp...
-SECRET = os.environ['SECRET']
+SECRET = os.environ['WEBHOOK_SECRET']
 
 loaded_configurations = None
 

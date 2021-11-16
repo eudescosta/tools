@@ -5,6 +5,8 @@ to create app in ocp
 
 ``` oc svn/webhook ```
 
+webhook secret to be created in ocp...
+
 to get installed resources
 
 ``` oc get all --selector app=webhook -o name ```
