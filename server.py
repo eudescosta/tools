@@ -1,12 +1,13 @@
+import requests, json, os
 from flask import Flask, request
-import requests, json
 
 import logging; log = logging.getLogger(__name__)
 DEBUG=log.debug; INFO=log.info; WARN=log.warning; ERROR=log.error
 
 app = Flask(__name__)
 
-SECRET = "some-secret" # this is a test, the real one will be on ocp secrets...
+# stored as a secret in ocp...
+SECRET = os.environ['SECRET']
 
 loaded_configurations = None
 
