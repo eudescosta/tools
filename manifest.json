@@ -13,14 +13,14 @@
     "event_listeners": [
         {
             "event" : "new-image",
-            "url" : "http://el-event-listener-nj389f-rht-webapp-argoqa.apps.ocp-delta.ocp-delta.ole.redhat.com/",
-            "namespace" : "rht-webapp-argoqa",
-            "pipeline" : "rht-bdd"
+            "url" : "some url",
+            "namespace" : "some namespace",
+            "pipeline" : "some pipeline"
         },
         {
             "event" : "new-...",
             "url" : "http://example.com",
-            "namespace" : "rht-webapp-another-namespace",
+            "namespace" : "some namespace",
             "pipeline" : "some_other_pipeline"
         }
     ]
